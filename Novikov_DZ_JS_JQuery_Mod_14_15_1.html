@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Random String Generator</title>
+    <link rel="stylesheet" href="css/mod1.css">
+</head>
+<body>
+<div class="rSG">
+    <h3>Random String Generator</h3>
+    <form action="">
+        <label for="string_length">
+            String should be
+            <input type="text" id="string_length">
+            characters long.
+        </label>
+        <p>Which characters are allowed to ocur in the strings?</p>
+        <input type="checkbox" id="num" value="0123456789">
+        <label for="num">Numeric digits (0-9)</label><br>
+        <input type="checkbox" id="up_let" value="QWERTYUIOPASDFGHJKLZXCVBNM">
+        <label for="up_let">Uppercase letters (A-Z)</label><br>
+        <input type="checkbox" id="low_let" value="qwertyuiopasdfghjklzxcvbnm">
+        <label for="low_let">Lowercase letters (a-z)</label><br>
+        <input type="button" id="but_gen" value="Generate">
+        <hr>
+        <label for="result">Result:</label>
+        <input type="text" id="result">
+    </form>
+</div>
+<script src="js/jquery-3.6.3.js"></script>
+<script src="js/mod_14_15_1.js"></script>
+</body>
+</html>
