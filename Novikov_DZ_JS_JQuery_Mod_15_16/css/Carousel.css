@@ -1,4 +1,35 @@
 
 .gallery {
     margin: auto;
+    width: 750px;
+    box-shadow: 0 0 10px cadetblue;
+    padding: 5px;
 }
+.owl-item img {
+    width: 750px;
+    height: 500px;
+}
+.owl-nav img {
+    width: 20px;
+    height: 20px;
+}
+#customers-gallery .owl-dots {
+    margin-top: 4px;
+    height: 20px;
+    position: relative;
+    top: -50px;
+}
+#customers-gallery .owl-nav {
+    margin-top: 0;
+    position: relative;
+    top: 25px;
+}
+#customers-gallery .owl-nav button {
+    width: 40px;
+    height: 40px;
+    padding: 7px !important;
+    border-radius: 50%;
+    border: 3px solid cornflowerblue;
+    background: white;
+}
+
