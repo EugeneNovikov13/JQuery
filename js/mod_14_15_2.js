@@ -22,3 +22,7 @@ function slideBlocks(e) {
         dragedBlock.parent().prev().css('height', e.pageY);
     }
 }
+
+$('.container:eq(1)').prepend('<p class="text-center"><strong>Photo titles:</strong> '+$('.column img').map(function(ind, elem){
+return $(elem).attr('alt');
+}).get().join(', ')+'</p>');
