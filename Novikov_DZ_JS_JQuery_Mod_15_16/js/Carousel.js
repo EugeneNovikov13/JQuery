@@ -28,8 +28,16 @@ owl.owlCarousel({
 	animateOut: 'fadeOut',
 });
 
+//ДОБАВЛЕНИЕ КНОПОК
+imgDiv = '<button type="button" role="presentation" class="owl-play"><img src="img/play.png" alt="P"></button>';
+$('.owl-prev').after(imgDiv);
+imgDiv = '<button type="button" role="presentation" class="owl-first disabled"><img src="img/first.png" alt="F"></button>';
+$('.owl-nav').prepend(imgDiv);
+imgDiv = '<button type="button" role="presentation" class="owl-last"><img src="img/last.png" alt="L"></button>';
+$('.owl-next').after(imgDiv);
+
 //АДАПТАЦИЯ К РАЗМЕРАМ ЭКРАНА
-$(window).on('load', screenAdaptation);
+$(window).on('resize load', screenAdaptation);
 
 function screenAdaptation () {
 	if ($(window).innerWidth() <= 800) {
@@ -42,36 +50,36 @@ function screenAdaptation () {
 	}
 }
 
-//ПОЛНЫЙ ЭКРАН
+//ПОЛНЫЙ ЭКРАН ЗАПРОС
 imgDiv = '<div class="full-screen"><img src="img/fs-in.png" alt="X"></div>';
 owl.append(imgDiv);
 
 $('.full-screen').click(function () {
 	if (!document.fullscreenElement) {
+	    $(window).off('resize', screenAdaptation);
 		document.documentElement.requestFullscreen().then(() => {
 		    $('.full-screen img').attr('src', 'img/fs-out.png');
 		});
 	}
 	else {
+	    $(window).on('resize', screenAdaptation);
 	    document.exitFullscreen().then(() => {
 	        $('.full-screen img').attr('src', 'img/fs-in.png');
 	    });
 	}
 })
 
+//ИЗМЕНЕНИЕ РАЗМЕРА ИЗОБРАЖЕНИЙ НА ПОЛНОМ ЭКРАНЕ И ОБРАТНО
 document.addEventListener('fullscreenchange', fullScreen)
 
 function fullScreen() {
 	if (document.fullscreenElement) {
-	    console.log($(window).innerWidth()/1.5 > $(window).innerHeight()-100)
-
-		if ($(window).innerWidth()/1.5 > $(window).innerHeight()-100) {
+		if ($(window).innerWidth()/1.5 > (window.outerHeight-100)) {
 			$('.owl-item img').css({
-				width: (($(window).innerHeight() - 100) * 1.5),
-				height: ($(window).innerHeight() - 100)
+				width: ((window.outerHeight - 100) * 1.5),
+				height: (window.outerHeight - 100)
 			})
-			$('.owl-item, .gallery').css({width: ($(window).innerHeight() - 100) * 1.5});
-			console.log('width' + ($(window).innerHeight() - 100) * 1.5 + 'height' + $(window).innerHeight() - 100)
+			$('.owl-item, .gallery').css({width: (window.outerHeight - 100) * 1.5});
 		}
 		else {
 			$('.owl-item img').css({
@@ -84,10 +92,6 @@ function fullScreen() {
 	else screenAdaptation ()
 }
 
-//owl.on('resize.owl.carousel', function() {
-//    owl.fadeOut(1000, 0)
-//})
-
 //ПРОКРУТКА КАРТИНОК КОЛЕСОМ МЫШИ
 owl.on('mousewheel', '.owl-stage', function (e) {
     if (e.originalEvent.deltaY>0) {
@@ -97,14 +101,6 @@ owl.on('mousewheel', '.owl-stage', function (e) {
     }
     e.preventDefault();
 });
-
-//ДОБАВЛЕНИЕ КНОПОК
-imgDiv = '<button type="button" role="presentation" class="owl-play"><img src="img/play.png" alt="P"></button>';
-$('.owl-prev').after(imgDiv);
-imgDiv = '<button type="button" role="presentation" class="owl-first disabled"><img src="img/first.png" alt="F"></button>';
-$('.owl-nav').prepend(imgDiv);
-imgDiv = '<button type="button" role="presentation" class="owl-last"><img src="img/last.png" alt="L"></button>';
-$('.owl-next').after(imgDiv);
 
 //ДОБАВЛЕНИЕ DISABLED К КНОПКАМ
 owl.on('changed.owl.carousel', function(e) {
@@ -116,6 +112,7 @@ owl.on('changed.owl.carousel', function(e) {
 	}
 	if (e.item.index === imgArr.length-1) {
 		$('.owl-last').addClass('disabled');
+		slideShow();
 	}
 	else {
 		$('.owl-last').removeClass('disabled');
