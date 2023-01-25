@@ -32,4 +32,15 @@
     border: 3px solid cornflowerblue;
     background: white;
 }
+.full-screen {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.full-screen img {
+    width: 40px;
+    height: 40px;
+}
 

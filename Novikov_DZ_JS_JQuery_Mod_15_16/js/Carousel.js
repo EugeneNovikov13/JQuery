@@ -14,48 +14,6 @@ for (let i =0; i<imgArr.length; i++) {
 imgDiv += '</div>';
 $('.gallery').html(imgDiv);
 
-//АДАПТАЦИЯ К РАЗМЕРАМ ЭКРАНА
-$(window).on('resize load', () => {
-	if ($(window).innerWidth() <= 800) {
-		$('.owl-item img').css({width: '450px', height: '300px'});
-		$('.gallery').css({width: '450px'});
-	}
-	if ($(window).innerWidth() > 800) {
-		$('.owl-item img').css({width: '750px', height: '500px'});
-		$('.gallery').css({width: '750px'})
-	}
-})
-
-//ПОЛНЫЙ ЭКРАН
-// .owl-stage-outer ХРАНИЛИЩЕ ДЛЯ ЗНАЧКА
-$('img').dblclick(function () {
-	if (!document.fullscreenElement) {
-		document.documentElement.requestFullscreen().then(() => {});
-	}
-	else document.exitFullscreen().then(() => {});
-})
-
-document.addEventListener('fullscreenchange', fullScreen)
-
-function fullScreen() {
-	if (document.fullscreenElement) {
-		if ($(window).innerWidth()/1.5 > $(window).innerHeight()-100) {
-			$('.owl-item img').css({
-				width: ($(window).innerHeight() - 100) * 1.5,
-				height: $(window).innerHeight() - 100
-			})
-			$('.owl-item, .gallery').css({width: ($(window).innerHeight() - 100) * 1.5});
-		}
-		else {
-			$('.owl-item img').css({
-				width: ($(window).innerWidth()-20),
-				height: (($(window).innerWidth()-20) / 1.5)
-			})
-			$('.owl-item, .gallery').css({width: ($(window).innerWidth()-20)});
-		}
-	}
-}
-
 
 //НАСТРОЙКА КАРУСЕЛИ
 let owl = $('.owl-carousel');
@@ -67,17 +25,68 @@ owl.owlCarousel({
 	nav: true,
 	navText: ['<img src="img/prev.png" alt="prev">', '<img src="img/next.png" alt="next">'],
 	smartSpeed: 450,
-	// responsive: {
-	// 	0: {
-	// 		items: 1
-	// 	},
-	// 	800: {
-	// 		items: 3
-	// 	}
-	// },
 	animateOut: 'fadeOut',
-	checkVisibility: false
 });
+
+//АДАПТАЦИЯ К РАЗМЕРАМ ЭКРАНА
+$(window).on('load', screenAdaptation);
+
+function screenAdaptation () {
+	if ($(window).innerWidth() <= 800) {
+		$('.owl-item img').css({width: '450px', height: '300px'});
+		$('.gallery').css({width: '450px'});
+	}
+	if ($(window).innerWidth() > 800) {
+		$('.owl-item img').css({width: '750px', height: '500px'});
+		$('.gallery').css({width: '750px'})
+	}
+}
+
+//ПОЛНЫЙ ЭКРАН
+imgDiv = '<div class="full-screen"><img src="img/fs-in.png" alt="X"></div>';
+owl.append(imgDiv);
+
+$('.full-screen').click(function () {
+	if (!document.fullscreenElement) {
+		document.documentElement.requestFullscreen().then(() => {
+		    $('.full-screen img').attr('src', 'img/fs-out.png');
+		});
+	}
+	else {
+	    document.exitFullscreen().then(() => {
+	        $('.full-screen img').attr('src', 'img/fs-in.png');
+	    });
+	}
+})
+
+document.addEventListener('fullscreenchange', fullScreen)
+
+function fullScreen() {
+	if (document.fullscreenElement) {
+	    console.log($(window).innerWidth()/1.5 > $(window).innerHeight()-100)
+
+		if ($(window).innerWidth()/1.5 > $(window).innerHeight()-100) {
+			$('.owl-item img').css({
+				width: (($(window).innerHeight() - 100) * 1.5),
+				height: ($(window).innerHeight() - 100)
+			})
+			$('.owl-item, .gallery').css({width: ($(window).innerHeight() - 100) * 1.5});
+			console.log('width' + ($(window).innerHeight() - 100) * 1.5 + 'height' + $(window).innerHeight() - 100)
+		}
+		else {
+			$('.owl-item img').css({
+				width: ($(window).innerWidth()-20),
+				height: (($(window).innerWidth()-20) / 1.5)
+			})
+			$('.owl-item, .gallery').css({width: ($(window).innerWidth()-20)});
+		}
+	}
+	else screenAdaptation ()
+}
+
+//owl.on('resize.owl.carousel', function() {
+//    owl.fadeOut(1000, 0)
+//})
 
 //ПРОКРУТКА КАРТИНОК КОЛЕСОМ МЫШИ
 owl.on('mousewheel', '.owl-stage', function (e) {
