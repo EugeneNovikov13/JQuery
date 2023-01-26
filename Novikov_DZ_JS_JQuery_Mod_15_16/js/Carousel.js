@@ -57,7 +57,7 @@ owl.append(imgDiv);
 $('.full-screen').click(function () {
 	if (!document.fullscreenElement) {
 	    $(window).off('resize', screenAdaptation);
-		document.documentElement.requestFullscreen().then(() => {
+		document.documentElement.requestFullscreen({ navigationUI: "hide" }).then(() => {
 		    $('.full-screen img').attr('src', 'img/fs-out.png');
 		});
 	}
@@ -74,12 +74,12 @@ document.addEventListener('fullscreenchange', fullScreen)
 
 function fullScreen() {
 	if (document.fullscreenElement) {
-		if ($(window).innerWidth()/1.5 > (window.outerHeight-100)) {
+		if ($(window).innerWidth()/1.5 > (window.outerHeight-90)) {
 			$('.owl-item img').css({
-				width: ((window.outerHeight - 100) * 1.5),
-				height: (window.outerHeight - 100)
+				width: ((window.outerHeight - 90) * 1.5),
+				height: (window.outerHeight - 90)
 			})
-			$('.owl-item, .gallery').css({width: (window.outerHeight - 100) * 1.5});
+			$('.owl-item, .gallery').css({width: (window.outerHeight - 90) * 1.5});
 		}
 		else {
 			$('.owl-item img').css({
