@@ -112,7 +112,7 @@ owl.on('changed.owl.carousel', function(e) {
 	}
 	if (e.item.index === imgArr.length-1) {
 		$('.owl-last').addClass('disabled');
-		slideShow();
+		$('.owl-stop').trigger('click');
 	}
 	else {
 		$('.owl-last').removeClass('disabled');
